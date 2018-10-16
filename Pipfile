@@ -8,6 +8,7 @@ tensorflow = "*"
 numpy = "*"
 six = "*"
 google-images-download = "*"
+tensorflow-hub = "*"
 
 [dev-packages]
 
