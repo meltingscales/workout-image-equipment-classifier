@@ -1,0 +1,4 @@
+dumbbell
+barbell
+kettlebell
+treadmill
