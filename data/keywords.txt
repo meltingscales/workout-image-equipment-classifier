@@ -2,3 +2,14 @@ dumbbell
 barbell
 kettlebell
 treadmill
+sneakers
+boxing gloves
+soccer ball
+american football ball
+tennis ball
+tennis racquet
+bicycle
+rollerskates
+pogo stick
+bench press
+leg press
