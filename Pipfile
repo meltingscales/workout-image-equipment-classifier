@@ -9,6 +9,7 @@ numpy = "*"
 six = "*"
 google-images-download = "*"
 tensorflow-hub = "*"
+pillow = "*"
 
 [dev-packages]
 
