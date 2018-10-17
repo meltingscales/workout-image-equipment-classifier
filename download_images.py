@@ -8,7 +8,7 @@ DOWNLOAD_DIR = os.path.join(BASE_DIR, 'downloaded_images')
 IMAGE_LIMIT = 100  # How many images should we download?
 ERROR_TOLERANCE = (IMAGE_LIMIT // 5)  # What to do if we miss a few?
 
-DELAY = 5  # How long do we wait between downloading images?
+DELAY = 1  # How long do we wait between downloading images?
 
 
 def sort_file(path: str):
