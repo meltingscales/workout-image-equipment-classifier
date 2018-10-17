@@ -1,5 +1,7 @@
 import sys
 import os
+
+from PIL import Image
 from google_images_download import google_images_download
 
 BASE_DIR = os.path.join(os.path.dirname(__file__), 'data')
@@ -36,6 +38,19 @@ def number_of_files(path: str) -> int:
     return sum([len(files) for r, d, files in os.walk(path)])
 
 
+def valid_picture_file(path: str, valid_formats=frozenset(['JPEG', 'JPG', 'PNG', 'GIF'])) -> bool:
+    try:
+        img = Image.open(path)
+        img.verify()
+        itype = img.format
+        # If it's not in the list of formats we allow for
+        if itype.upper() not in [format.upper() for format in valid_formats]:
+            return False
+    except(IOError, SyntaxError) as e:
+        return False
+    return True
+
+
 if __name__ == '__main__':
     if not os.path.exists(DOWNLOAD_DIR):
         os.mkdir(DOWNLOAD_DIR)
@@ -57,10 +72,20 @@ if __name__ == '__main__':
             }
 
             filenum = number_of_files(os.path.join(DOWNLOAD_DIR, item))
+            itemdir = os.path.join(DOWNLOAD_DIR, item)
 
             if filenum + ERROR_TOLERANCE < IMAGE_LIMIT:
-                print(f" DL ( {item:20s} )[{filenum:^5d}<{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}")
+                print(f' DL ( {item:20s} )[{filenum:^5d}<{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
                 paths = response.download(args)
                 print(paths)
             else:
-                print(f"SKIP( {item:20s} )[{filenum:^5d}/{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}")
+                print(f'SKIP( {item:20s} )[{filenum:^5d}/{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
+
+            # Verify they're not corrupted/garbage image files
+            for filename in os.listdir(itemdir):
+
+                filepath = os.path.join(itemdir, filename)
+
+                if not valid_picture_file(filepath):
+                    print(f'\t[BAD]: {filepath[-60:]}')
+                    os.remove(filepath)
