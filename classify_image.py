@@ -48,6 +48,8 @@ from six.moves import urllib
 FLAGS = None
 
 DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
+LABEL_FILE_NAME = 'imagenet_2012_challenge_label_map_proto.pbtxt'
+UID_FILE_NAME = 'imagenet_synset_to_human_label_map.txt'
 
 
 class NodeLookup(object):
@@ -58,10 +60,10 @@ class NodeLookup(object):
                  uid_lookup_path=None):
         if not label_lookup_path:
             label_lookup_path = os.path.join(
-                FLAGS.model_dir, 'imagenet_2012_challenge_label_map_proto.pbtxt')
+                FLAGS.model_dir, LABEL_FILE_NAME)
         if not uid_lookup_path:
             uid_lookup_path = os.path.join(
-                FLAGS.model_dir, 'imagenet_synset_to_human_label_map.txt')
+                FLAGS.model_dir, UID_FILE_NAME)
         self.node_lookup = self.load(label_lookup_path, uid_lookup_path)
 
     def load(self, label_lookup_path, uid_lookup_path):
@@ -115,11 +117,11 @@ class NodeLookup(object):
         return self.node_lookup[node_id]
 
 
-def create_graph():
+def create_graph(filename='classify_image_graph_def.pb'):
     """Creates a graph from saved GraphDef file and returns a saver."""
     # Creates graph from saved graph_def.pb.
     with tf.gfile.FastGFile(os.path.join(
-            FLAGS.model_dir, 'classify_image_graph_def.pb'), 'rb') as f:
+            FLAGS.model_dir, filename), 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')

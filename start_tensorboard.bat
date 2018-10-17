@@ -1,1 +1,1 @@
-tensorboard --logdir tmp/retrain_logs
+tensorboard --logdir %~d0%/tmp/retrain_logs

@@ -26,9 +26,9 @@ def sort_file(path: str):
 
     with open(path, 'w') as f:
         for i in range(0, len(sorted_stuff)):
-            item = sorted_stuff[i]
+            single_item = sorted_stuff[i]
 
-            f.write(item)
+            f.write(single_item)
 
             if i + 1 < len(sorted_stuff):
                 f.write('\n')
@@ -38,15 +38,16 @@ def number_of_files(path: str) -> int:
     return sum([len(files) for r, d, files in os.walk(path)])
 
 
-def valid_picture_file(path: str, valid_formats=frozenset(['JPEG', 'JPG', 'PNG', 'GIF'])) -> bool:
+def valid_picture_file(path: str, valid_formats=frozenset(['JPEG', 'JPG', 'PNG', 'GIF', 'BMP'])) -> bool:
     try:
         img = Image.open(path)
         img.verify()
         itype = img.format
         # If it's not in the list of formats we allow for
-        if itype.upper() not in [format.upper() for format in valid_formats]:
+        if itype.upper() not in [good_format.upper() for good_format in valid_formats]:
             return False
     except(IOError, SyntaxError) as e:
+        print(e)
         return False
     return True
 
