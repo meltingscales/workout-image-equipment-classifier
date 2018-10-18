@@ -14,21 +14,29 @@ BASE_DIR = os.path.join(SCRIPT_DIR, 'data')
 DOWNLOAD_DIR = os.path.join(BASE_DIR, 'downloaded_images')
 CHROMEDRIVER_LOCATION = os.path.join(SCRIPT_DIR, ('tmp/chromedriver' + ('.exe' if iswindows() else '')))
 
-if not os.path.isfile(CHROMEDRIVER_LOCATION):
-    print(CHROMEDRIVER_LOCATION)
-    print("Above path doesn't exist.")
-    print('Hey you! Download `chromedriver` and put it in `tmp/`!')
-    print('http://chromedriver.chromium.org/downloads')
-    exit(1)
-
-IMAGE_LIMIT = 2000  # How many images should we download?
+IMAGE_LIMIT = 1500  # How many images should we download?
 ERROR_TOLERANCE = (IMAGE_LIMIT // 2)  # What to do if we miss a few?
+DRY_RUN = False  # Should we just check, sort, and verify W/O downloading?
 
 DELAY = 0  # How long do we wait between downloading images?
 
 
 def hash_file(filepath: str) -> None:
-    return hashlib.md5(open(filepath, 'rb').read()).hexdigest()
+    file = open(filepath, 'rb')
+    data = file.read()
+    file.close()
+
+    return hashlib.md5(data).hexdigest()
+
+
+def get_extension_maybe(filepath: str) -> str:
+    try:
+        img = Image.open(filepath)
+        img.verify()
+        itype = img.format
+        return itype
+    except Exception as e:
+        return "UNKNOWN"
 
 
 def remove_duplicate_files(path: str) -> int:
@@ -51,14 +59,18 @@ def remove_duplicate_files(path: str) -> int:
             hashes[image_hash] = image_path
 
             # Give it the hash as a name.
-            name, ext = filepath.rsplit('.', 1) if '.' in filepath else (filepath, '')
             name = image_hash
 
-            new_image_path = os.path.join(path, ('.'.join((name, ext,))))
+            name += "." + get_extension_maybe(image_path)
+
+            new_image_path = os.path.join(path, name)
             try:
-                os.rename(image_path, new_image_path)
+                if image_path != new_image_path:
+                    os.rename(image_path, new_image_path)
             except FileExistsError as e:  # This means we've already got a file that's got a hash as a name.
                 del hashes[image_hash]  # Delete entry so we can remove the file we initially tried to rename.
+            except FileNotFoundError as e:
+                pass
 
     return dupes
 
@@ -99,10 +111,22 @@ def valid_picture_file(path: str, valid_formats=frozenset(['JPEG', 'JPG', 'PNG',
     except(IOError, SyntaxError) as e:
         print(e)
         return False
+    except Exception as e:
+        return False
     return True
 
 
 if __name__ == '__main__':
+
+    if not os.path.isfile(CHROMEDRIVER_LOCATION):
+        print(CHROMEDRIVER_LOCATION)
+        print("Above path doesn't exist.")
+        print('Hey you! Download `chromedriver` and put it in `tmp/`!')
+        print('http://chromedriver.chromium.org/downloads')
+        exit(1)
+
+    if DRY_RUN:
+        print(f"Warning: Not downloading files. DRY_RUN is true.")
 
     if not os.path.exists(DOWNLOAD_DIR):
         os.mkdir(DOWNLOAD_DIR)
@@ -133,8 +157,11 @@ if __name__ == '__main__':
 
         if filenum + ERROR_TOLERANCE < IMAGE_LIMIT:
             print(f' DL ( {item:20s} )[{filenum:^5d}<{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
-            paths = response.download(args)
-            print(paths)
+
+            if not DRY_RUN:  # actually download
+                paths = response.download(args)
+                print(paths)
+
         else:
             print(f'SKIP( {item:20s} )[{filenum:^5d}/{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
 
@@ -145,7 +172,11 @@ if __name__ == '__main__':
 
             if not valid_picture_file(filepath):
                 print(f'\t[BAD]: {filepath[-60:]}')
-                os.remove(filepath)
+
+                try:
+                    os.remove(filepath)
+                except Exception as e:
+                    continue
 
         # Remove duplicate files, and also give them MD5 hashes as names.
         remove_duplicate_files(itemdir)
