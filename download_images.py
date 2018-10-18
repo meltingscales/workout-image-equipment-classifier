@@ -55,7 +55,10 @@ def remove_duplicate_files(path: str) -> int:
             name = image_hash
 
             new_image_path = os.path.join(path, ('.'.join((name, ext,))))
-            os.rename(image_path, new_image_path)
+            try:
+                os.rename(image_path, new_image_path)
+            except FileExistsError as e:  # This means we've already got a file that's got a hash as a name.
+                del hashes[image_hash]  # Delete entry so we can remove the file we initially tried to rename.
 
     return dupes
 
@@ -104,41 +107,45 @@ if __name__ == '__main__':
     if not os.path.exists(DOWNLOAD_DIR):
         os.mkdir(DOWNLOAD_DIR)
 
+    # Sort the file
     sort_file('data/keywords.txt')
 
-    with open('data/keywords.txt', 'r') as file:
-        for item in file.readlines():
-            item = item.strip()
+    f = open('data/keywords.txt', 'r')
+    items = f.readlines()
+    f.close()
 
-            response = google_images_download.googleimagesdownload()
-            args = {
-                'keywords': item,
-                'limit': IMAGE_LIMIT,
-                'print_urls': False,
-                'print_paths': False,
-                'output_directory': DOWNLOAD_DIR,
-                'delay': DELAY,
-                'chromedriver': CHROMEDRIVER_LOCATION,
-            }
+    for item in items:
+        item = item.strip()
 
-            filenum = number_of_files(os.path.join(DOWNLOAD_DIR, item))
-            itemdir = os.path.join(DOWNLOAD_DIR, item)
+        response = google_images_download.googleimagesdownload()
+        args = {
+            'keywords': item,
+            'limit': IMAGE_LIMIT,
+            'print_urls': False,
+            'print_paths': False,
+            'output_directory': DOWNLOAD_DIR,
+            'delay': DELAY,
+            'chromedriver': CHROMEDRIVER_LOCATION,
+        }
 
-            if filenum + ERROR_TOLERANCE < IMAGE_LIMIT:
-                print(f' DL ( {item:20s} )[{filenum:^5d}<{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
-                paths = response.download(args)
-                print(paths)
-            else:
-                print(f'SKIP( {item:20s} )[{filenum:^5d}/{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
+        filenum = number_of_files(os.path.join(DOWNLOAD_DIR, item))
+        itemdir = os.path.join(DOWNLOAD_DIR, item)
 
-            # Verify they're not corrupted/garbage image files
-            for filename in os.listdir(itemdir):
+        if filenum + ERROR_TOLERANCE < IMAGE_LIMIT:
+            print(f' DL ( {item:20s} )[{filenum:^5d}<{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
+            paths = response.download(args)
+            print(paths)
+        else:
+            print(f'SKIP( {item:20s} )[{filenum:^5d}/{IMAGE_LIMIT:^5d}] ± {ERROR_TOLERANCE}')
 
-                filepath = os.path.join(itemdir, filename)
+        # Verify they're not corrupted/garbage image files
+        for filename in os.listdir(itemdir):
 
-                if not valid_picture_file(filepath):
-                    print(f'\t[BAD]: {filepath[-60:]}')
-                    os.remove(filepath)
+            filepath = os.path.join(itemdir, filename)
 
-            # Remove duplicate files, and also give them MD5 hashes as names.
-            remove_duplicate_files(itemdir)
+            if not valid_picture_file(filepath):
+                print(f'\t[BAD]: {filepath[-60:]}')
+                os.remove(filepath)
+
+        # Remove duplicate files, and also give them MD5 hashes as names.
+        remove_duplicate_files(itemdir)
