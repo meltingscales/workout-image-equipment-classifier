@@ -23,7 +23,7 @@ if not os.path.isfile(CHROMEDRIVER_LOCATION):
 IMAGE_LIMIT = 1000  # How many images should we download?
 ERROR_TOLERANCE = (IMAGE_LIMIT // 5)  # What to do if we miss a few?
 
-DELAY = 1  # How long do we wait between downloading images?
+DELAY = 0  # How long do we wait between downloading images?
 
 
 def sort_file(path: str):
