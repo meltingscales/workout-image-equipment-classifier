@@ -1,4 +1,5 @@
-﻿import os
+﻿import hashlib
+import os
 
 from PIL import Image
 from google_images_download import google_images_download
@@ -20,13 +21,46 @@ if not os.path.isfile(CHROMEDRIVER_LOCATION):
     print('http://chromedriver.chromium.org/downloads')
     exit(1)
 
-IMAGE_LIMIT = 1000  # How many images should we download?
-ERROR_TOLERANCE = (IMAGE_LIMIT // 5)  # What to do if we miss a few?
+IMAGE_LIMIT = 2000  # How many images should we download?
+ERROR_TOLERANCE = (IMAGE_LIMIT // 2)  # What to do if we miss a few?
 
 DELAY = 0  # How long do we wait between downloading images?
 
 
-def sort_file(path: str):
+def hash_file(filepath: str) -> None:
+    return hashlib.md5(open(filepath, 'rb').read()).hexdigest()
+
+
+def remove_duplicate_files(path: str) -> int:
+    """Note: This is susceptible to MD5 hash collisions.
+
+    Only to be used if you don't necessarily care about 100% correctness."""
+    hashes = {}
+    dupes = 0
+
+    for filepath in os.listdir(path):
+        image_path = os.path.join(path, filepath)
+        image_hash = hash_file(image_path)
+
+        if image_hash in hashes:
+            os.remove(image_path)
+            dupes += 1
+
+        else:
+            # Record it.
+            hashes[image_hash] = image_path
+
+            # Give it the hash as a name.
+            name, ext = filepath.rsplit('.', 1) if '.' in filepath else (filepath, '')
+            name = image_hash
+
+            new_image_path = os.path.join(path, ('.'.join((name, ext,))))
+            os.rename(image_path, new_image_path)
+
+    return dupes
+
+
+def sort_file(path: str) -> None:
     sorted_stuff = []
 
     # read lines
@@ -66,6 +100,7 @@ def valid_picture_file(path: str, valid_formats=frozenset(['JPEG', 'JPG', 'PNG',
 
 
 if __name__ == '__main__':
+
     if not os.path.exists(DOWNLOAD_DIR):
         os.mkdir(DOWNLOAD_DIR)
 
@@ -104,3 +139,6 @@ if __name__ == '__main__':
                 if not valid_picture_file(filepath):
                     print(f'\t[BAD]: {filepath[-60:]}')
                     os.remove(filepath)
+
+            # Remove duplicate files, and also give them MD5 hashes as names.
+            remove_duplicate_files(itemdir)
