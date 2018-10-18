@@ -1,13 +1,26 @@
-import sys
-import os
+﻿import os
 
 from PIL import Image
 from google_images_download import google_images_download
 
-BASE_DIR = os.path.join(os.path.dirname(__file__), 'data')
-DOWNLOAD_DIR = os.path.join(BASE_DIR, 'downloaded_images')
 
-IMAGE_LIMIT = 100  # How many images should we download?
+def iswindows():
+    return os.name == 'nt'
+
+
+SCRIPT_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.join(SCRIPT_DIR, 'data')
+DOWNLOAD_DIR = os.path.join(BASE_DIR, 'downloaded_images')
+CHROMEDRIVER_LOCATION = os.path.join(SCRIPT_DIR, ('tmp/chromedriver' + ('.exe' if iswindows() else '')))
+
+if not os.path.isfile(CHROMEDRIVER_LOCATION):
+    print(CHROMEDRIVER_LOCATION)
+    print("Above path doesn't exist.")
+    print('Hey you! Download `chromedriver` and put it in `tmp/`!')
+    print('http://chromedriver.chromium.org/downloads')
+    exit(1)
+
+IMAGE_LIMIT = 1000  # How many images should we download?
 ERROR_TOLERANCE = (IMAGE_LIMIT // 5)  # What to do if we miss a few?
 
 DELAY = 1  # How long do we wait between downloading images?
@@ -70,6 +83,7 @@ if __name__ == '__main__':
                 'print_paths': False,
                 'output_directory': DOWNLOAD_DIR,
                 'delay': DELAY,
+                'chromedriver': CHROMEDRIVER_LOCATION,
             }
 
             filenum = number_of_files(os.path.join(DOWNLOAD_DIR, item))
