@@ -1,0 +1,20 @@
+{
+  "no equipment": [
+    "walking",
+    "jogging",
+    "running",
+    "sit-ups",
+    "push-ups"
+  ],
+  "treadmill": [
+    "running",
+    "walking",
+    "jogging"
+  ],
+  "dumbbell": [
+    "bicep curl",
+    "lateral raise",
+    "stationary lunge",
+    "toe raise"
+  ]
+}
