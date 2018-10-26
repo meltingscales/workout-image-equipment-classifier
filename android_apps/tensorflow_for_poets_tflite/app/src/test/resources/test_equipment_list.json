@@ -1,0 +1,14 @@
+{
+  "no equipment": [
+    "walking",
+    "jogging",
+    "running",
+    "sit-ups",
+    "push-ups"
+  ],
+  "treadmill": [
+    "running",
+    "walking",
+    "jogging"
+  ]
+}

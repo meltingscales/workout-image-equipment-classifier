@@ -1,0 +1,18 @@
+{
+  "walking": [
+    "legs",
+    "thighs",
+    "calves"
+  ],
+  "jogging": [
+    "legs",
+    "thighs",
+    "calves"
+  ],
+  "push-ups": [
+    "arms",
+    "chest",
+    "biceps",
+    "pectorals"
+  ]
+}

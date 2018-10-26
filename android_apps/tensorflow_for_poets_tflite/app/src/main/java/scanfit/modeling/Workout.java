@@ -9,6 +9,7 @@ public class Workout implements Serializable {
     public String name;
     public Set<MuscleGroup> muscleGroups = new HashSet<>();
 
+
     public Workout(String name, String... muscleGroups) {
         this.name = name;
 
@@ -29,5 +30,44 @@ public class Workout implements Serializable {
             }
         }
         return false;
+    }
+
+    // So we can do comparisons in sets, etc.
+    public boolean equals(Workout other) {
+
+        // Same name?
+        if (!other.name.equals(this.name)) {
+            return false;
+        }
+
+        if (this.muscleGroups.size() != other.muscleGroups.size()) {
+            return false;
+        }
+
+        Object[] ourMusclegroups = this.muscleGroups.toArray();
+        Object[] theirMuscleGroups = other.muscleGroups.toArray();
+
+        for (int i = 0; i < this.muscleGroups.size(); i++) {
+            MuscleGroup ours = (MuscleGroup) ourMusclegroups[i];
+            MuscleGroup theirs = (MuscleGroup) theirMuscleGroups[i];
+
+            if (!ours.equals(theirs)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /***
+     * Override for Sets/comparison elsewhere.
+     */
+    @Override
+    public boolean equals(Object o) {
+        try {
+            return this.equals((Workout) o);
+        } catch (ClassCastException e) {
+            return this.equals(o);
+        }
     }
 }

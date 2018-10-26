@@ -58,9 +58,9 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite:1.10.0'
     implementation 'com.google.guava:guava:23.0'
 
-    compile 'junit:junit:4.12'
-    compile 'com.android.support.test:runner:1.0.2'
-    compile 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api 'junit:junit:4.12'
+    api 'com.android.support.test:runner:1.0.2'
+    api 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-
+    testImplementation 'org.json:json:20140107'
 }
