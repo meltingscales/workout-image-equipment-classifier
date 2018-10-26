@@ -61,4 +61,9 @@ public class Equipment implements Serializable, Comparable<Equipment> {
             return o.equals(this);
         }
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

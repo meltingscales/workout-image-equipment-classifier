@@ -25,12 +25,15 @@ public class testFitnessModel extends TestCase {
 
     JSONObject equipmentJSON;
     JSONObject workoutJSON;
+    WorkoutSolver workoutSolver;
 
     @Override
     @Before
     public void setUp() throws FileNotFoundException, JSONException {
         equipmentJSON = new JSONObject(stringFromFile(new File(getClass().getResource("/test_equipment_list.json").getFile())));
         workoutJSON = new JSONObject(stringFromFile(new File(getClass().getResource("/test_workout_types.json").getFile())));
+
+        workoutSolver = new WorkoutSolver(equipmentJSON, workoutJSON);
     }
 
     @Override
@@ -67,12 +70,16 @@ public class testFitnessModel extends TestCase {
     @Test
     public void testRequiredEquipment() {
 
+        Workout walkToDaPark = new Workout("walking", "thighs", "legs", "calves");
+        Equipment noEquipment = new Equipment("no equipment", "walking", "jogging", "running", "sit-ups", "push-ups");
+
+        //We should be able to perform 'walking' with 'no equipment'.
+        assertTrue(workoutSolver.requiredEquipment(walkToDaPark).contains(noEquipment));
     }
 
     @Test
     public void testWorkoutSolver() throws JSONException {
 
-        WorkoutSolver workoutSolver = new WorkoutSolver(equipmentJSON, workoutJSON);
 
         HashSet<Equipment> availableEquipment = new HashSet<Equipment>() {{
             add(new Equipment("no equipment",

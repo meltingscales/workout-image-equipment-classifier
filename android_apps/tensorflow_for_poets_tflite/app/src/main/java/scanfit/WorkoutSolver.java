@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -145,9 +144,14 @@ public class WorkoutSolver extends Application {
      * Given a Workout, what is the Set of Equipment it can use?
      */
     public Set<Equipment> requiredEquipment(Workout w) {
+
         HashSet<Equipment> ret = new HashSet<>();
 
-        //TODO actually finish this
+        for (Equipment equipment : this.equipmentSet) {
+            if (equipment.exerciseSet.contains(w.name)) {
+                ret.add(equipment);
+            }
+        }
 
         return ret;
     }
