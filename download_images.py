@@ -123,6 +123,12 @@ if __name__ == '__main__':
         print("Above path doesn't exist.")
         print('Hey you! Download `chromedriver` and put it in `tmp/`!')
         print('http://chromedriver.chromium.org/downloads')
+
+        temp_path = os.path.join(SCRIPT_DIR, 'tmp')
+
+        if not os.path.exists(temp_path):
+            os.mkdir(temp_path)
+
         exit(1)
 
     if DRY_RUN:
