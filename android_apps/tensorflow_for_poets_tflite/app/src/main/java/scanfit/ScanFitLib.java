@@ -2,10 +2,14 @@ package scanfit;
 
 import android.content.Context;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScanFitLib {
@@ -29,6 +33,16 @@ public class ScanFitLib {
         is.close();
 
         return json;
+    }
+
+    public static ArrayList<String> stringListFromJsonArray(JSONArray j) throws JSONException {
+        ArrayList<String> ret = new ArrayList<>();
+
+        for (int i = 0; i < j.length(); i++) {
+            ret.add(j.getString(i));
+        }
+
+        return ret;
     }
 
     public static String stringFromFile(File file) throws FileNotFoundException {

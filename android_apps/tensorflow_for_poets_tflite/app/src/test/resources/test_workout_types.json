@@ -14,5 +14,10 @@
     "chest",
     "biceps",
     "pectorals"
+  ],
+  "rowing": [
+    "legs",
+    "thighs",
+    "calves"
   ]
 }

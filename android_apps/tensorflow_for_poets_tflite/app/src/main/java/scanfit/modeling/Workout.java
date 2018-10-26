@@ -21,7 +21,6 @@ public class Workout implements Serializable {
     /***
      * Does this Workout contain a specific MuscleGroup?
      * @param m The MuscleGroup.
-     * @return
      */
     public boolean contains(MuscleGroup m) {
         for (MuscleGroup x : muscleGroups) {
@@ -40,6 +39,7 @@ public class Workout implements Serializable {
             return false;
         }
 
+        // Same size?
         if (this.muscleGroups.size() != other.muscleGroups.size()) {
             return false;
         }
@@ -47,6 +47,7 @@ public class Workout implements Serializable {
         Object[] ourMusclegroups = this.muscleGroups.toArray();
         Object[] theirMuscleGroups = other.muscleGroups.toArray();
 
+        // All objects the same?
         for (int i = 0; i < this.muscleGroups.size(); i++) {
             MuscleGroup ours = (MuscleGroup) ourMusclegroups[i];
             MuscleGroup theirs = (MuscleGroup) theirMuscleGroups[i];
@@ -69,5 +70,29 @@ public class Workout implements Serializable {
         } catch (ClassCastException e) {
             return this.equals(o);
         }
+    }
+
+
+    @Override
+    public int hashCode() {
+        int start = name.hashCode();
+
+        for (MuscleGroup m : this.muscleGroups) {
+            start = start ^ m.hashCode();
+        }
+
+        return start;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder ret = new StringBuilder(String.format("%s: ", this.name));
+
+        for (MuscleGroup m : this.muscleGroups) {
+            ret.append(m.toString()).append("; ");
+        }
+
+        return ret.toString();
     }
 }

@@ -10,5 +10,8 @@
     "running",
     "walking",
     "jogging"
+  ],
+  "rowing machine": [
+    "rowing"
   ]
 }
