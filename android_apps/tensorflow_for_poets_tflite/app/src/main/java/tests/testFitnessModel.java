@@ -30,6 +30,7 @@ public class testFitnessModel {
 
     }
 
+    @Test
     /**
      * Test that I've set up {@link Workout#equals(Workout)} correctly for Java's
      * {@link Set#contains(Object)} method.
