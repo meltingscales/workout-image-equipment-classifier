@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package com.example.android.tflitecamerademo;
+package com.scanfit.tflitecamera;
 
 import android.content.Context;
 import android.util.AttributeSet;

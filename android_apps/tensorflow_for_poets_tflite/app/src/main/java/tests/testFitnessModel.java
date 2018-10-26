@@ -1,5 +1,10 @@
 package tests;
 
+import com.scanfit.WorkoutSolver;
+import com.scanfit.modeling.Equipment;
+import com.scanfit.modeling.MuscleGroup;
+import com.scanfit.modeling.Workout;
+
 import junit.framework.TestCase;
 
 import org.json.JSONException;
@@ -14,12 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Set;
 
-import scanfit.WorkoutSolver;
-import scanfit.modeling.Equipment;
-import scanfit.modeling.MuscleGroup;
-import scanfit.modeling.Workout;
-
-import static scanfit.ScanFitLib.stringFromFile;
+import static com.scanfit.ScanFitLib.stringFromFile;
 
 public class testFitnessModel extends TestCase {
 

@@ -6,14 +6,14 @@ android_binary(
     name = "TfLiteCameraDemo",
     srcs = glob(["java/**/*.java"]),
     assets = [
-        "@tflite_mobilenet//:labels.txt",
-        "@tflite_mobilenet//:mobilenet_quant_v1_224.tflite",
+        "@tflite_mobilenet//:output_labels.txt",
+        "@tflite_mobilenet//:optimized_graph.lite",
     ],
     assets_dir = "",
-    custom_package = "com.example.android.tflitecamerademo",
+    custom_package = "com.scanfit",
     manifest = "AndroidManifest.xml",
     nocompress_extensions = [
-        ".tflite",
+        ".lite",
     ],
     resource_files = glob(["res/**"]),
     # In some platforms we don't have an Android SDK/NDK and this target

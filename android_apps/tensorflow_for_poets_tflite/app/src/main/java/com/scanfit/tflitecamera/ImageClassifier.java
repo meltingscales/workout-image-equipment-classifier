@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package com.example.android.tflitecamerademo;
+package com.scanfit.tflitecamera;
 
 import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
@@ -48,7 +48,7 @@ public class ImageClassifier {
     /**
      * Tag for the {@link Log}.
      */
-    private static final String TAG = "TfLiteCameraDemo";
+    private static final String TAG = ImageClassifier.class.getSimpleName();
     /**
      * Name of the model file stored in Assets.
      */

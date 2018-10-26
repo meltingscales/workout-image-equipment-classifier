@@ -1,9 +1,12 @@
-package scanfit;
+package com.scanfit;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.google.common.collect.Sets;
+import com.scanfit.modeling.Equipment;
+import com.scanfit.modeling.MuscleGroup;
+import com.scanfit.modeling.Workout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,12 +18,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import scanfit.modeling.Equipment;
-import scanfit.modeling.MuscleGroup;
-import scanfit.modeling.Workout;
-
-import static scanfit.ScanFitLib.loadJSONFromAsset;
-import static scanfit.ScanFitLib.stringListFromJsonArray;
+import static com.scanfit.ScanFitLib.loadJSONFromAsset;
+import static com.scanfit.ScanFitLib.stringListFromJsonArray;
 
 @SuppressWarnings("unused")
 public class WorkoutSolver extends Application {

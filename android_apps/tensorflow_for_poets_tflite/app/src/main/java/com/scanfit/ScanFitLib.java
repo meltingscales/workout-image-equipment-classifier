@@ -1,4 +1,4 @@
-package scanfit;
+package com.scanfit;
 
 import android.content.Context;
 
