@@ -70,6 +70,7 @@ def remove_duplicate_files(path: str) -> int:
             except FileExistsError as e:  # This means we've already got a file that's got a hash as a name.
                 del hashes[image_hash]  # Delete entry so we can remove the file we initially tried to rename.
             except FileNotFoundError as e:
+                print(e)
                 pass
 
     return dupes
