@@ -10,7 +10,6 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,10 +46,10 @@ public class testFitnessModel extends TestCase {
     public void testWorkout() {
         Workout reallyGoodWorkout = new Workout("run really fast", "legs", "feet");
 
-        Assert.assertTrue(reallyGoodWorkout.contains(new MuscleGroup("legs")));
-        Assert.assertTrue(reallyGoodWorkout.contains(new MuscleGroup("feet")));
+        assertTrue(reallyGoodWorkout.contains(new MuscleGroup("legs")));
+        assertTrue(reallyGoodWorkout.contains(new MuscleGroup("feet")));
 
-        Assert.assertFalse(reallyGoodWorkout.contains(new MuscleGroup("arms")));
+        assertFalse(reallyGoodWorkout.contains(new MuscleGroup("arms")));
 
     }
 
@@ -62,9 +61,9 @@ public class testFitnessModel extends TestCase {
     public void testSetSanity() {
         Workout gooderWorkout = new Workout("squat hard", "legs", "buttocks", "scrungus");
 
-        Assert.assertTrue(gooderWorkout.muscleGroups.contains(new MuscleGroup("buttocks")));
+        assertTrue(gooderWorkout.muscleGroups.contains(new MuscleGroup("buttocks")));
 
-        Assert.assertFalse(gooderWorkout.muscleGroups.contains(new MuscleGroup("nose")));
+        assertFalse(gooderWorkout.muscleGroups.contains(new MuscleGroup("nose")));
     }
 
     @Test
@@ -99,11 +98,11 @@ public class testFitnessModel extends TestCase {
 
 
         // It SHOULD contain walking and jogging, as it uses 'no equipment'.
-        Assert.assertTrue(workouts.contains(new Workout("walking", "thighs", "legs", "calves")));
-        Assert.assertTrue(workouts.contains(new Workout("jogging", "thighs", "legs", "calves")));
+        assertTrue(workouts.contains(new Workout("walking", "thighs", "legs", "calves")));
+        assertTrue(workouts.contains(new Workout("jogging", "thighs", "legs", "calves")));
 
         // It should NOT contain 'rowing', as we have NO EQUIPMENT.
-        Assert.assertTrue(!workouts.contains(new Workout("rowing", "thighs", "legs", "calves")));
+        assertTrue(!workouts.contains(new Workout("rowing", "thighs", "legs", "calves")));
     }
 
 }
