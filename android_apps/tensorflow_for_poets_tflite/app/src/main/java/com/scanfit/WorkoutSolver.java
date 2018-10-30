@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.common.collect.Sets;
-import com.scanfit.modeling.Equipment;
-import com.scanfit.modeling.MuscleGroup;
-import com.scanfit.modeling.Workout;
+import com.scanfit.modeling.fitness.Equipment;
+import com.scanfit.modeling.fitness.MuscleGroup;
+import com.scanfit.modeling.fitness.Workout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,7 +83,7 @@ public class WorkoutSolver extends Application {
 //            System.out.println(equipmentType);
 
             for (String muscleGroup : workoutMuscleGroups) {
-                equipment.exerciseSet.add(muscleGroup);
+                equipment.getExerciseSet().add(muscleGroup);
 //                System.out.println("    " + muscleGroup);
             }
 
@@ -147,7 +147,7 @@ public class WorkoutSolver extends Application {
         HashSet<Equipment> ret = new HashSet<>();
 
         for (Equipment equipment : this.equipmentSet) {
-            if (equipment.exerciseSet.contains(w.name)) {
+            if (equipment.getExerciseSet().contains(w.name)) {
                 ret.add(equipment);
             }
         }
@@ -168,7 +168,7 @@ public class WorkoutSolver extends Application {
         System.out.printf("We want to train our '%s', and we have the following equipment available:%n", desiredMuscleGroup.toString());
 
         for (Equipment e : availableEquipment) {
-            System.out.printf("\t%s%n", e.name);
+            System.out.printf("\t%s%n", e.getName());
         }
 
         // Try all workouts.

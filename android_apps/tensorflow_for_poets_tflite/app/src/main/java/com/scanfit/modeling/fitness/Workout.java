@@ -1,4 +1,4 @@
-package com.scanfit.modeling;
+package com.scanfit.modeling.fitness;
 
 import java.io.Serializable;
 import java.util.HashSet;

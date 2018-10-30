@@ -2,18 +2,21 @@ package tests;
 
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+
 
 public class testStuff {
 
     @Test
     public void testWereNotGoingNuts() {
-        assert (true);
+        assertTrue(true);
     }
 
     public void testWeCanDoTehMaths() {
-        assert (1 == 1);
-        assert (1 != 2);
+        assertEquals(1, 1);
+        assertEquals(1, 2);
 
-        assert(2 + 2 == 4);
+        assertEquals(2 + 2, 4);
     }
 }
