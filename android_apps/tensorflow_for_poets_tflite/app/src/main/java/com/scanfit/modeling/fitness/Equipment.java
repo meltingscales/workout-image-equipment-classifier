@@ -1,4 +1,4 @@
-package com.scanfit.modeling;
+package com.scanfit.modeling.fitness;
 
 import android.support.annotation.NonNull;
 

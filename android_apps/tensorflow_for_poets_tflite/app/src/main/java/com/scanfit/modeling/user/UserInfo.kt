@@ -1,4 +1,4 @@
-package com.scanfit.modeling
+package com.scanfit.modeling.user
 
 interface UserInfo {
 

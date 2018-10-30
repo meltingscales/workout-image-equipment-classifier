@@ -1,6 +1,5 @@
 package com.scanfit.activities;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,12 +8,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.scanfit.R;
-import com.scanfit.modeling.BodyType;
-import com.scanfit.modeling.Person;
+import com.scanfit.modeling.user.BodyType;
+import com.scanfit.modeling.user.Person;
 
 import java.util.Date;
 

@@ -4,9 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.common.collect.Sets;
-import com.scanfit.modeling.Equipment;
-import com.scanfit.modeling.MuscleGroup;
-import com.scanfit.modeling.Workout;
+import com.scanfit.modeling.fitness.Equipment;
+import com.scanfit.modeling.fitness.MuscleGroup;
+import com.scanfit.modeling.fitness.Workout;
 
 import org.json.JSONArray;
 import org.json.JSONException;

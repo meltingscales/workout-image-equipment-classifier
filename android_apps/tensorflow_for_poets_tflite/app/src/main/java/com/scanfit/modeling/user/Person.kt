@@ -1,5 +1,6 @@
-package com.scanfit.modeling
+package com.scanfit.modeling.user
 
+import com.scanfit.modeling.fitness.Height
 import java.io.Serializable
 import java.util.*
 

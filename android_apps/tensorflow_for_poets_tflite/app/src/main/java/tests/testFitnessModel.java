@@ -1,9 +1,9 @@
 package tests;
 
 import com.scanfit.WorkoutSolver;
-import com.scanfit.modeling.Equipment;
-import com.scanfit.modeling.MuscleGroup;
-import com.scanfit.modeling.Workout;
+import com.scanfit.modeling.fitness.Equipment;
+import com.scanfit.modeling.fitness.MuscleGroup;
+import com.scanfit.modeling.fitness.Workout;
 
 import junit.framework.TestCase;
 
