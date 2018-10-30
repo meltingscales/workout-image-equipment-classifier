@@ -1,6 +1,6 @@
 package com.scanfit.modeling;
 
-enum BodyType {
+public enum BodyType {
     MASCULINE,
     FEMININE,
     NONBINARY,
