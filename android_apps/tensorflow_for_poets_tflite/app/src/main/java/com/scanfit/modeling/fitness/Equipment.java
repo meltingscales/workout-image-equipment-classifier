@@ -8,20 +8,36 @@ import java.util.HashSet;
 
 public class Equipment implements Serializable, Comparable<Equipment> {
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public HashSet<String> getExerciseSet() {
+        return exerciseSet;
+    }
+
+    public void setExerciseSet(HashSet<String> exerciseSet) {
+        this.exerciseSet = exerciseSet;
+    }
+
     /***
      * What is this Equipment called?
      */
-    public String name;
+    private String name;
 
     /***
      * Set of all exercise NAMES you can do with this Equipment.
      */
-    public HashSet<String> exerciseSet = new HashSet<>();
+    private HashSet<String> exerciseSet = new HashSet<>();
 
     public Equipment(String name, String... exerciseNames) {
-        this.name = name;
+        this.setName(name);
 
-        Collections.addAll(exerciseSet, exerciseNames);
+        Collections.addAll(getExerciseSet(), exerciseNames);
     }
 
     public Equipment(String name) {
@@ -35,9 +51,9 @@ public class Equipment implements Serializable, Comparable<Equipment> {
 
     @Override
     public int hashCode() {
-        int start = name.hashCode();
+        int start = getName().hashCode();
 
-        for (String s : exerciseSet) {
+        for (String s : getExerciseSet()) {
             start = start ^ s.hashCode();
         }
 
@@ -46,11 +62,11 @@ public class Equipment implements Serializable, Comparable<Equipment> {
 
     public boolean equals(Equipment e) {
 
-        if (!this.name.equals(e.name)) {
+        if (!this.getName().equals(e.getName())) {
             return false;
         }
 
-        return this.exerciseSet.containsAll(e.exerciseSet);
+        return this.getExerciseSet().containsAll(e.getExerciseSet());
     }
 
     @Override
@@ -64,6 +80,6 @@ public class Equipment implements Serializable, Comparable<Equipment> {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.getName();
     }
 }
