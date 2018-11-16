@@ -101,18 +101,14 @@ public class HomeActivity extends AppCompatActivity {
 
         listView.setAdapter(equipmentArrayAdapter);
 
-        findViewById(R.id.buttonAddGear).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CameraActivity.class)); //TODO: Instead of starting CameraActivity, give them a choice
-            }
+        findViewById(R.id.buttonAddGear).setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), CameraActivity.class)); //TODO: Instead of starting CameraActivity, give them a choice
         });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setTheme(R.style.Theme_AppCompat);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 

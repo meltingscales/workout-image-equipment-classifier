@@ -1,13 +1,10 @@
 #common settings that generally should always be used with your language specific settings
-
 # Auto detect text files and perform LF normalization
 # http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
 * text=auto
-
 #
 # The above will handle all files NOT found below
 #
-
 # Documents
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain
@@ -27,9 +24,8 @@
 *.tab text
 *.tsv text
 *.sql text
-
 # Graphics
-*.png binary
+*.png filter=lfs diff=lfs merge=lfs -text
 *.jpg binary
 *.jpeg binary
 *.gif binary

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-pipenv run python classify_image.py --image_file=data/real_images/dumbbell.jpg
-pipenv run python classify_image.py --image_file=data/real_images/treadmill.jpg
-pipenv run python classify_image.py --image_file=data/real_images/football.jpg
-pipenv run python classify_image.py --image_file=data/real_images/soccer_ball.jpg
+for filename in ./data/real_images/*; do
+
+	pipenv run python classify_image.py\
+	--image_file=data/real_images/$filename
+	
+done
